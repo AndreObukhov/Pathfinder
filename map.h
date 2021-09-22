@@ -46,6 +46,7 @@ public:
     void checkSize();
 
     char pointStatus(const Point& pt);
+    bool isFree(const Point& pt);
 
 private:
     unsigned mapSize_;

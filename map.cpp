@@ -82,3 +82,13 @@ char map::pointStatus(const Point& pt) {
         return CELL_ACCESS_ERROR;
     }
 }
+
+bool map::isFree(const Point &pt) {
+    if (pt.x < mapSize_ && pt.y < mapSize_) {
+        // '#' is the only symbol meaning that point is not free:
+        return map_[pt.x][pt.y] != '#';
+    } else {
+        // to avoid accessing unassigned memory
+        return false;
+    }
+}

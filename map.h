@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <string>
+#include <deque>
 
 // special value returned if point coordinates is out of map range
 #define CELL_ACCESS_ERROR 'E'
@@ -16,24 +17,25 @@
  */
 typedef struct Point {
     /**
-     * The default-est constructor possible. Initializes x and y fields with zeros.
+     * The default-est constructor possible. Initializes col and row fields with zeros.
      */
     Point();
 
     /**
-     * Another constructor, which sets x and y with given values.
-     * @param new_x x coordinate of the point.
-     * @param new_y y coordinate of the point.
+     * Another constructor, which sets col and row with given values.
+     * @param new_col col coordinate of the point.
+     * @param new_row row coordinate of the point.
      */
-    Point(short new_y, short new_x);
+    Point(short new_col, short new_row);
 
-    short x;
-    short y;
+    short col;
+    short row;
 } Point;
 
 // Some operators for convenient points operations:
 bool operator == (const Point& p1, const Point& p2);
 Point operator - (const Point& p1, const Point& p2);
+Point operator + (const Point& p1, const Point& p2);
 std::ostream& operator << (std::ostream& o, const Point& p);
 
 
@@ -54,6 +56,8 @@ public:
     bool isVisited() const;
     void setVisited();
 
+    bool needToVisit() const;
+
     void setPrevPoint(const Point& p);
     Point getPrevPoint() const;
 private:
@@ -69,16 +73,25 @@ public:
     void printMap() const;
     void printSizes() const;
 
+    short getSize() const;
+
     char pointStatus(const Point& pt) const;
     bool isFree(const Point& pt) const;
 
     bool isVisited(const Point &pt) const;
+    void setVisited(const Point &pt);
+
+    bool needToVisit(const Point& pt) const;
+    void setPrevPoint(const Point& current, const Point& prev);
+    Point getPrevPoint(const Point& pt) const;
+
+    void markRoute(const std::deque<Point>& route);
 
     Point getStartPoint() const;
     Point getFinishPoint() const;
 
 private:
-    short mapSize_{};
+    short mapSize_;
     std::vector<std::vector<mapElement>> map_;
 
     Point start_;

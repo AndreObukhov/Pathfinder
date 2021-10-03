@@ -9,6 +9,7 @@ int main() {
     Point pt = {0, 0};
     // std::cout << pt << std::endl;
     std::cout << m.pointStatus(pt) << std::endl;
+    std::cout << m.isFree(pt) << std::endl;
     pt.x = 11;
     std::cout << m.pointStatus(pt) << std::endl;
 

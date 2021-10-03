@@ -12,9 +12,7 @@
 #define CELL_ACCESS_ERROR 'E'
 
 /**
- * Struct representing point of the map.
- * Contains point's coordinates.
- * Later may be used to store more info.
+ * Struct representing point of the map. Contains point's coordinates.
  */
 typedef struct Point {
     /**
@@ -27,10 +25,10 @@ typedef struct Point {
      * @param new_x x coordinate of the point.
      * @param new_y y coordinate of the point.
      */
-    Point(unsigned new_x, unsigned new_y);
+    Point(short new_x, short new_y);
 
-    unsigned x;
-    unsigned y;
+    short x;
+    short y;
 } Point;
 
 // Some operators for convenient points operations:
@@ -39,18 +37,48 @@ Point operator - (const Point& p1, const Point& p2);
 std::ostream& operator << (std::ostream& o, const Point& p);
 
 
+/**
+ * Class representing point of the map.
+ * Contains point status (free/barrier/start/finish),
+ * and info required for search algorithm - was it visited before and previous point in search in my case.
+ */
+class mapElement {
+public:
+    mapElement();
+    mapElement(const char& s);
+
+    void setStatus(const char& s);
+    char getStatus() const;
+
+    bool isFree() const;
+
+    bool isVisited() const;
+    void setVisited();
+
+    void setPrevPoint(const Point& p);
+    Point getPrevPoint() const;
+private:
+    char status;        // Representation of what is on the map in this point.
+    bool visited;       // If the point was visited during the search. Defaults to false in all constructors.
+    Point prevPoint;    // Coords of previous point in search. Defaults to (0, 0) in all constructors.
+};
+
+
 class map {
 public:
     map(const std::string& filename);
-    void printMap();
-    void checkSize();
+    void printMap() const;
+    void printSizes() const;
 
-    char pointStatus(const Point& pt);
-    bool isFree(const Point& pt);
+    char pointStatus(const Point& pt) const;
+    bool isFree(const Point& pt) const;
+
+    Point getStartPoint() const;
+    Point getFinishPoint() const;
 
 private:
-    unsigned mapSize_;
-    std::vector<std::vector<char>> map_;
+    short mapSize_;
+    std::vector<std::vector<mapElement>> map_;
 
     Point start_;
     Point finish_;

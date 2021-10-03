@@ -12,9 +12,9 @@ Point::Point() {
     y = 0;
 }
 
-Point::Point(unsigned new_y, unsigned new_x) {
-    x = new_x;
-    y = new_y;
+Point::Point(short new_x, short new_y) {
+    x = new_y;
+    y = new_x;
 }
 
 
@@ -32,63 +32,102 @@ std::ostream& operator << (std::ostream& o, const Point& p) {
 }
 
 
+mapElement::mapElement() : status('.'), visited(false) {}
+
+mapElement::mapElement(const char& s) : status(s), visited(false) {}
+
+bool mapElement::isVisited() const {
+    return visited;
+}
+
+bool mapElement::isFree() const {
+    // Status can be 's' for start, 'f' for finish, '.' for free cell and '#' for barrier.
+    // All except for '#' are interpreted as free point:
+    return status != '#';
+}
+
+void mapElement::setPrevPoint(const Point &p) {
+    prevPoint = p;
+}
+
+Point mapElement::getPrevPoint() const {
+    return prevPoint;
+}
+
+void mapElement::setVisited() {
+    visited = true;
+}
+
+void mapElement::setStatus(const char &s) {
+    status = s;
+}
+
+char mapElement::getStatus() const {
+    return status;
+}
+
+
 map::map(const std::string& filename) {
     std::ifstream input;
     input.open(filename);
 
     input >> mapSize_;
-    map_.resize(mapSize_, std::vector<char>(mapSize_));
+    map_.resize(mapSize_, std::vector<mapElement>(mapSize_));
 
     char inputSymbol;
-    for (unsigned i = 0; i < mapSize_; i ++) {
-        for (unsigned j = 0; j < mapSize_; j ++) {
+    for (short i = 0; i < mapSize_; i ++) {
+        for (short j = 0; j < mapSize_; j ++) {
             input >> inputSymbol;
-            if (inputSymbol == 'S') {
-                start_.x = j;
-                start_.y = i;
-                // map_[i][j] = '.';
-            }
-            if (inputSymbol == 'F') {
-                finish_.x = j;
-                finish_.y = i;
-                // map_[i][j] = '.';
-            }
-            map_[i][j] = inputSymbol;
+            if (inputSymbol == 'S')
+                start_ = Point(i, j);
+
+            if (inputSymbol == 'F')
+                finish_ = Point(i, j);
+
+            // because mapElems are '.' by default
+            if (inputSymbol != '.')
+                map_[i][j].setStatus(inputSymbol);
         }
     }
 
     input.close();
 }
 
-void map::checkSize() {
+void map::printSizes() const {
     for (const auto& v : map_) {
         std::cout << v.size() << std::endl;
     }
 }
 
-void map::printMap() {
+void map::printMap() const {
     for (const auto& v: map_ ) {
         for (const auto& el: v) {
-            std::cout << el << ' ';
+            std::cout << el.getStatus() << ' ';
         }
         std::cout << std::endl;
     }
 }
 
-char map::pointStatus(const Point& pt) {
+char map::pointStatus(const Point& pt) const {
     if (pt.x < mapSize_ && pt.y < mapSize_) {
-        return map_[pt.x][pt.y];
+        return map_[pt.x][pt.y].getStatus();
     } else {
         return CELL_ACCESS_ERROR;
     }
 }
 
-bool map::isFree(const Point &pt) {
-    if (pt.x < mapSize_ && pt.y < mapSize_) {
-        // '#' is the only symbol meaning that point is not free:
-        return map_[pt.x][pt.y] != '#';
-    } else {
-        // to avoid accessing unassigned memory
+bool map::isFree(const Point &pt) const {
+    // to avoid accessing unassigned memory
+    if (pt.x < mapSize_ && pt.y < mapSize_)
+        return map_[pt.x][pt.y].isFree();
+    else
         return false;
-    }
+}
+
+Point map::getStartPoint() const {
+    return start_;
+}
+
+Point map::getFinishPoint() const {
+    return finish_;
 }

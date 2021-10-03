@@ -12,9 +12,9 @@ Point::Point() {
     y = 0;
 }
 
-Point::Point(short new_x, short new_y) {
-    x = new_y;
-    y = new_x;
+Point::Point(short new_y, short new_x) {
+    x = new_x;
+    y = new_y;
 }
 
 
@@ -122,6 +122,10 @@ bool map::isFree(const Point &pt) const {
         return map_[pt.x][pt.y].isFree();
     else
         return false;
+}
+
+bool map::isVisited(const Point &pt) const {
+    return map_[pt.x][pt.y].isVisited();
 }
 
 Point map::getStartPoint() const {

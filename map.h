@@ -25,7 +25,7 @@ typedef struct Point {
      * @param new_x x coordinate of the point.
      * @param new_y y coordinate of the point.
      */
-    Point(short new_x, short new_y);
+    Point(short new_y, short new_x);
 
     short x;
     short y;
@@ -49,7 +49,6 @@ public:
 
     void setStatus(const char& s);
     char getStatus() const;
-
     bool isFree() const;
 
     bool isVisited() const;
@@ -73,11 +72,13 @@ public:
     char pointStatus(const Point& pt) const;
     bool isFree(const Point& pt) const;
 
+    bool isVisited(const Point &pt) const;
+
     Point getStartPoint() const;
     Point getFinishPoint() const;
 
 private:
-    short mapSize_;
+    short mapSize_{};
     std::vector<std::vector<mapElement>> map_;
 
     Point start_;

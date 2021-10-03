@@ -6,9 +6,9 @@ int main() {
     map m("../map.txt");
     m.printMap();
 
-    Point pt = {0, 0};
+    Point pt = {2, 4};
     // std::cout << pt << std::endl;
-    std::cout << m.pointStatus(pt) << std::endl;
+    std::cout << pt << ": " << m.pointStatus(pt) << std::endl;
     std::cout << m.isFree(pt) << std::endl;
     pt.x = 11;
     std::cout << m.pointStatus(pt) << std::endl;

@@ -3,4 +3,7 @@ project(PathFinder)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(PathFinder main.cpp map.cpp map.h finder_bfs.cpp finder_bfs.h)
+add_executable(PathFinder main.cpp
+        profile.h
+        map.cpp map.h
+        finder_bfs.cpp finder_bfs.h)

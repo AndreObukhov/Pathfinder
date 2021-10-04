@@ -34,6 +34,7 @@ typedef struct Point {
 
 // Some operators for convenient points operations:
 bool operator == (const Point& p1, const Point& p2);
+bool operator != (const Point& p1, const Point& p2);
 Point operator - (const Point& p1, const Point& p2);
 Point operator + (const Point& p1, const Point& p2);
 std::ostream& operator << (std::ostream& o, const Point& p);

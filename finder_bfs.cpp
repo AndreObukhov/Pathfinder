@@ -22,7 +22,7 @@ std::deque<Point> findRoute(map& m) {
         if (currentPoint == finish) {
             Point pt = finish;
             Point start = m.getStartPoint();
-            while(!(pt == start)) {
+            while(pt != start) {
                 route.push_front(pt);
                 pt = m.getPrevPoint(pt);
             }

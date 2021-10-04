@@ -22,6 +22,10 @@ bool operator == (const Point& p1, const Point& p2) {
     return (p1.col == p2.col && p1.row == p2.row);
 }
 
+bool operator != (const Point& p1, const Point& p2) {
+    return (p1.col != p2.col || p1.row != p2.row);
+}
+
 Point operator - (const Point& p1, const Point& p2) {
     return Point(p1.col - p2.col, p1.row - p2.row);
 }
@@ -166,7 +170,7 @@ Point map::getFinishPoint() const {
 
 void map::markRoute(const std::deque<Point> &route) {
     for (const Point& pt : route) {
-        if (!(pt == finish_) && !(pt == start_)) {
+        if (pt != finish_ && pt != start_) {
             map_[pt.row][pt.col].setStatus('*');
         }
     }

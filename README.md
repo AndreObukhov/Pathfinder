@@ -1,8 +1,8 @@
 <h1> Pathfinder <h1>
 
-Search of path between two points on a 2-dimensional map.
+<h5> Search of path between two points on a 2-dimensional map. <h5>
 
-###1. Default algorithm v1
+<h3> 1. Default algorithm v1 <h3>
 
 (Made by Andrew Obukhov)
 

@@ -12,7 +12,7 @@ By doing this, once the algorithm reaches finish point,
 the route (if there is one) can be built 
 by reversing to the start point.
 
-###2. Default algorithm v2
+<h3> 2. Default algorithm v2 </h3>
 
 (made by Ilya Kochetygov)
 
@@ -22,6 +22,6 @@ the distance to the start point is written on each step.
 This also allows to build route by reversing, 
 but apparently requires less memory and read-write operations.
 
-###3. Fancy algorithms
+<h3> 3. Fancy algorithms </h3>
 
 (made by Yauhenii Sharamed)

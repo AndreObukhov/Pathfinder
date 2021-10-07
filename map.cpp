@@ -40,46 +40,46 @@ std::ostream& operator << (std::ostream& o, const Point& p) {
 }
 
 
-mapElement::mapElement() : status('.'), visited(false) {}
+bfsPoints::mapElement::mapElement() : status('.'), visited(false) {}
 
-mapElement::mapElement(const char& s) : status(s), visited(false) {}
+bfsPoints::mapElement::mapElement(const char& s) : status(s), visited(false) {}
 
-bool mapElement::isVisited() const {
+bool bfsPoints::mapElement::isVisited() const {
     return visited;
 }
 
-bool mapElement::isFree() const {
+bool bfsPoints::mapElement::isFree() const {
     // Status can be 's' for start, 'f' for finish, '.' for free cell and '#' for barrier.
     // All except for '#' are interpreted as free point:
     return status != '#';
 }
 
-void mapElement::setPrevPoint(const Point &p) {
+void bfsPoints::mapElement::setPrevPoint(const Point &p) {
     prevPoint = p;
 }
 
-Point mapElement::getPrevPoint() const {
+Point bfsPoints::mapElement::getPrevPoint() const {
     return prevPoint;
 }
 
-void mapElement::setVisited() {
+void bfsPoints::mapElement::setVisited() {
     visited = true;
 }
 
-void mapElement::setStatus(const char &s) {
+void bfsPoints::mapElement::setStatus(const char &s) {
     status = s;
 }
 
-char mapElement::getStatus() const {
+char bfsPoints::mapElement::getStatus() const {
     return status;
 }
 
-bool mapElement::needToVisit() const {
+bool bfsPoints::mapElement::needToVisit() const {
     return (this->isFree() && !this->isVisited());
 }
 
 
-map::map(const std::string& filename) {
+bfsPoints::map::map(const std::string& filename) {
     std::ifstream input;
     input.open(filename);
 
@@ -105,13 +105,7 @@ map::map(const std::string& filename) {
     input.close();
 }
 
-void map::printSizes() const {
-    for (const auto& v : map_) {
-        std::cout << v.size() << std::endl;
-    }
-}
-
-void map::printMap() const {
+void bfsPoints::map::printMap() const {
     for (const auto& v: map_ ) {
         for (const auto& el: v) {
             std::cout << el.getStatus() << ' ';
@@ -120,11 +114,11 @@ void map::printMap() const {
     }
 }
 
-short map::getSize() const {
+short bfsPoints::map::getSize() const {
     return mapSize_;
 }
 
-char map::pointStatus(const Point& pt) const {
+char bfsPoints::map::pointStatus(const Point& pt) const {
     if (pt.col < mapSize_ && pt.row < mapSize_) {
         return map_[pt.row][pt.col].getStatus();
     } else {
@@ -132,7 +126,7 @@ char map::pointStatus(const Point& pt) const {
     }
 }
 
-bool map::isFree(const Point &pt) const {
+bool bfsPoints::map::isFree(const Point &pt) const {
     // to avoid accessing unassigned memory
     if (pt.col < mapSize_ && pt.row < mapSize_)
         return map_[pt.row][pt.col].isFree();
@@ -140,35 +134,35 @@ bool map::isFree(const Point &pt) const {
         return false;
 }
 
-bool map::isVisited(const Point &pt) const {
+bool bfsPoints::map::isVisited(const Point &pt) const {
     return map_[pt.row][pt.col].isVisited();
 }
 
-void map::setVisited(const Point &pt) {
+void bfsPoints::map::setVisited(const Point &pt) {
     map_[pt.row][pt.col].setVisited();
 }
 
-bool map::needToVisit(const Point &pt) const {
+bool bfsPoints::map::needToVisit(const Point &pt) const {
     return map_[pt.row][pt.col].needToVisit();
 }
 
-void map::setPrevPoint(const Point &current, const Point &prev) {
+void bfsPoints::map::setPrevPoint(const Point &current, const Point &prev) {
     map_[current.row][current.col].setPrevPoint(prev);
 }
 
-Point map::getPrevPoint(const Point &pt) const {
+Point bfsPoints::map::getPrevPoint(const Point &pt) const {
     return map_[pt.row][pt.col].getPrevPoint();
 }
 
-Point map::getStartPoint() const {
+Point bfsPoints::map::getStartPoint() const {
     return start_;
 }
 
-Point map::getFinishPoint() const {
+Point bfsPoints::map::getFinishPoint() const {
     return finish_;
 }
 
-void map::markRoute(const std::deque<Point> &route) {
+void bfsPoints::map::markRoute(const std::deque<Point> &route) {
     for (const Point& pt : route) {
         if (pt != finish_ && pt != start_) {
             map_[pt.row][pt.col].setStatus('*');

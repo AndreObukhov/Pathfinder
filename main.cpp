@@ -4,17 +4,34 @@
 #include "finder_bfs.h"
 #include "profile.h"
 
+#include "map_generator.h"
+
 int main() {
-    map m("../map.txt");
+    // generateMap(30, 20, "../gen.txt");
+
+    bfsPoints::map m("../map.txt");
     m.printMap();
     std::cout << "--------------------" << std::endl;
 
     std::deque<Point> route;
+
     {
-        LOG_DURATION("Base algorithm time");
-        route = findRoute(m);
+        LOG_DURATION("BFS algorithm with Points");
+        route = bfsPoints::findRoute(m);
     }
-    m.markRoute(route);
-    m.printMap();
+
+    if (!route.empty()) {
+        m.markRoute(route);
+        m.printMap();
+    }
+    else {
+        if (m.getStartPoint() == m.getFinishPoint()) {
+            std::cout << "Start and end points are the same." << std::endl;
+        }
+        else {
+            std::cout << "No route" << std::endl;
+        }
+    }
+
     return 0;
 }

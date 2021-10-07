@@ -39,65 +39,72 @@ Point operator - (const Point& p1, const Point& p2);
 Point operator + (const Point& p1, const Point& p2);
 std::ostream& operator << (std::ostream& o, const Point& p);
 
-
+namespace bfsPoints {
 /**
  * Class representing point of the map.
  * Contains point status (free/barrier/start/finish),
  * and info required for search algorithm - was it visited before and previous point in search in my case.
  */
-class mapElement {
-public:
-    mapElement();
-    mapElement(const char& s);
+    class mapElement {
+    public:
+        mapElement();
+        mapElement(const char &s);
 
-    void setStatus(const char& s);
-    char getStatus() const;
-    bool isFree() const;
+        void setStatus(const char &s);
+        char getStatus() const;
 
-    bool isVisited() const;
-    void setVisited();
+        bool isFree() const;
 
-    bool needToVisit() const;
+        bool isVisited() const;
+        void setVisited();
+        bool needToVisit() const;
 
-    void setPrevPoint(const Point& p);
-    Point getPrevPoint() const;
-private:
-    char status;        // Representation of what is on the map in this point.
-    bool visited;       // If the point was visited during the search. Defaults to false in all constructors.
-    Point prevPoint;    // Coords of previous point in search. Defaults to (0, 0) in all constructors.
-};
+        void setPrevPoint(const Point &p);
+        Point getPrevPoint() const;
+
+    private:
+        char status;        // Representation of what is on the map in this point.
+        bool visited;       // If the point was visited during the search. Defaults to false in all constructors.
+        Point prevPoint;    // Coords of previous point in search. Defaults to (0, 0) in all constructors.
+    };
 
 
-class map {
-public:
-    map(const std::string& filename);
-    void printMap() const;
-    void printSizes() const;
+    class map {
+    public:
+        map(const std::string &filename);
 
-    short getSize() const;
+        void printMap() const;
 
-    char pointStatus(const Point& pt) const;
-    bool isFree(const Point& pt) const;
+        short getSize() const;
 
-    bool isVisited(const Point &pt) const;
-    void setVisited(const Point &pt);
+        char pointStatus(const Point &pt) const;
+        bool isFree(const Point &pt) const;
 
-    bool needToVisit(const Point& pt) const;
-    void setPrevPoint(const Point& current, const Point& prev);
-    Point getPrevPoint(const Point& pt) const;
+        bool isVisited(const Point &pt) const;
+        void setVisited(const Point &pt);
 
-    void markRoute(const std::deque<Point>& route);
+        bool needToVisit(const Point &pt) const;
 
-    Point getStartPoint() const;
-    Point getFinishPoint() const;
+        void setPrevPoint(const Point &current, const Point &prev);
+        Point getPrevPoint(const Point &pt) const;
 
-private:
-    short mapSize_;
-    std::vector<std::vector<mapElement>> map_;
+        void markRoute(const std::deque<Point> &route);
 
-    Point start_;
-    Point finish_;
-};
+        Point getStartPoint() const;
+        Point getFinishPoint() const;
+
+    private:
+        short mapSize_;
+        std::vector<std::vector<mapElement>> map_;
+
+        Point start_;
+        Point finish_;
+    };
+}
+
+namespace bfsInts {
+    // ...
+}
 
 
 #endif //PATHFINDER_MAP_H

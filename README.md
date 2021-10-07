@@ -1,4 +1,4 @@
-##Pathfinder
+<h1> Pathfinder <h1>
 
 Search of path between two points on a 2-dimensional map.
 

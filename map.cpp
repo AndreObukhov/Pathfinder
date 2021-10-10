@@ -40,18 +40,36 @@ std::ostream& operator << (std::ostream& o, const Point& p) {
 }
 
 
-bfsPoints::mapElement::mapElement() : status('.'), visited(false) {}
 
-bfsPoints::mapElement::mapElement(const char& s) : status(s), visited(false) {}
-
-bool bfsPoints::mapElement::isVisited() const {
-    return visited;
+mapElem::mapElem() {
+    status = '.';
+    visited = false;
+}
+mapElem::mapElem(const char& s) {
+    status = s;
+    visited = false;
 }
 
-bool bfsPoints::mapElement::isFree() const {
-    // Status can be 's' for start, 'f' for finish, '.' for free cell and '#' for barrier.
-    // All except for '#' are interpreted as free point:
+void mapElem::setStatus(const char &s) {
+    status = s;
+}
+
+char mapElem::getStatus() const {
+    return status;
+}
+
+bool mapElem::isFree() const {
     return status != '#';
+}
+
+bool mapElem::isVisited() const {
+    return visited;
+}
+void mapElem::setVisited() {
+    visited = true;
+}
+bool mapElem::needToVisit() const {
+    return (this->isFree() && !this->isVisited());
 }
 
 void bfsPoints::mapElement::setPrevPoint(const Point &p) {
@@ -61,23 +79,6 @@ void bfsPoints::mapElement::setPrevPoint(const Point &p) {
 Point bfsPoints::mapElement::getPrevPoint() const {
     return prevPoint;
 }
-
-void bfsPoints::mapElement::setVisited() {
-    visited = true;
-}
-
-void bfsPoints::mapElement::setStatus(const char &s) {
-    status = s;
-}
-
-char bfsPoints::mapElement::getStatus() const {
-    return status;
-}
-
-bool bfsPoints::mapElement::needToVisit() const {
-    return (this->isFree() && !this->isVisited());
-}
-
 
 bfsPoints::map::map(const std::string& filename) {
     std::ifstream input;
@@ -103,6 +104,28 @@ bfsPoints::map::map(const std::string& filename) {
     }
 
     input.close();
+}
+
+bfsPoints::map::map(const short& size, const int& barrierPercent) {
+    mapSize_ = size;
+
+    std::random_device rd;          // only used once to initialise (seed) engine
+    std::mt19937 rng(rd());         // random-number engine used (Mersenne-Twister)
+    std::uniform_int_distribution<int> uni(0, 100);     // guaranteed unbiased
+
+    map_.resize(size);
+    for (int i = 0; i < size; i ++) {
+        std::vector<mapElement> line(size);
+        for (int j = 0; j < size; j++) {
+            int a = uni(rng);
+            if (a % 100 < barrierPercent) {
+                line[j].setStatus('#');
+            } else {
+                line[j].setStatus('.');
+            }
+        }
+        map_[i] = line;
+    }
 }
 
 void bfsPoints::map::printMap() const {

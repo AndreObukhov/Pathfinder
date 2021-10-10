@@ -9,6 +9,8 @@
 #include <string>
 #include <deque>
 
+#include <random>
+
 // special value returned if point coordinates is out of map range
 #define CELL_ACCESS_ERROR 'E'
 
@@ -39,32 +41,36 @@ Point operator - (const Point& p1, const Point& p2);
 Point operator + (const Point& p1, const Point& p2);
 std::ostream& operator << (std::ostream& o, const Point& p);
 
+
+class mapElem {
+public:
+    mapElem();
+    mapElem(const char& s);
+    void setStatus(const char &s);
+    char getStatus() const;
+
+    bool isFree() const;
+
+    bool isVisited() const;
+    void setVisited();
+    bool needToVisit() const;
+protected:
+    char status;        // Representation of what is on the map in this point.
+    bool visited;       // If the point was visited during the search. Defaults to false in all constructors.
+};
+
+
 namespace bfsPoints {
 /**
  * Class representing point of the map.
  * Contains point status (free/barrier/start/finish),
  * and info required for search algorithm - was it visited before and previous point in search in my case.
  */
-    class mapElement {
+    class mapElement : public mapElem {
     public:
-        mapElement();
-        mapElement(const char &s);
-
-        void setStatus(const char &s);
-        char getStatus() const;
-
-        bool isFree() const;
-
-        bool isVisited() const;
-        void setVisited();
-        bool needToVisit() const;
-
         void setPrevPoint(const Point &p);
         Point getPrevPoint() const;
-
     private:
-        char status;        // Representation of what is on the map in this point.
-        bool visited;       // If the point was visited during the search. Defaults to false in all constructors.
         Point prevPoint;    // Coords of previous point in search. Defaults to (0, 0) in all constructors.
     };
 
@@ -72,9 +78,9 @@ namespace bfsPoints {
     class map {
     public:
         map(const std::string &filename);
+        map(const short& size, const int& barrierPercent);
 
         void printMap() const;
-
         short getSize() const;
 
         char pointStatus(const Point &pt) const;

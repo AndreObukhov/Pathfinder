@@ -16,6 +16,7 @@
 
 // special value returned if point coordinates is out of map range
 #define CELL_ACCESS_ERROR 'E'
+#define INT_MAX 1
 
 /**
  * Struct representing point of the map. Contains point's coordinates.
@@ -196,7 +197,7 @@ namespace bfsPoints {
         void setPrevPoint(const Point &p);
         Point getPrevPoint() const;
     private:
-        Point prevPoint;    // Coords of previous point in search. Defaults to (0, 0) in all constructors.
+        Point prevPoint;    // Coords of previous point in search. Defaults to (0, 0) in Point constructor.
     };
 
     class map : public mapT<bfsPoints::mapElement> {
@@ -207,8 +208,23 @@ namespace bfsPoints {
     };
 }
 
+
 namespace bfsInts {
-    // ...
+    class mapElement : public mapElem {
+    public:
+        mapElement();
+        void setDist(const int &d);
+        int getDist() const;
+    private:
+        int dist;
+    };
+
+    class map : public mapT<bfsInts::mapElement> {
+    public:
+        explicit map(const std::string& filename);
+        void setDist(const Point &current, const int &d);
+        int getDist(const Point &pt) const;
+    };
 }
 
 

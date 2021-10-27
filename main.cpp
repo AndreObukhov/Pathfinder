@@ -8,6 +8,14 @@
 
 int main() {
     // generateMap(30, 20, "../gen.txt");
+    /*
+    bfsInts::map m("../gen.txt");
+    for (int i = 0; i < 20; i ++) {
+        std::cout << m.getDist(Point(i, 0)) << " ";
+    }
+    std::cout << std::endl;
+    m.printMap();
+    */
 
     bfsPoints::map m("../map.txt");
     m.printMap();
@@ -22,7 +30,7 @@ int main() {
 
     if (!route.empty()) {
         m.markRoute(route);
-        m.printMap();
+        // m.printMap();
     }
     else {
         if (m.getStartPoint() == m.getFinishPoint()) {

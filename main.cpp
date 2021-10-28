@@ -36,7 +36,10 @@ int main() {
 
     SimpleMap map("../map.txt");
     map.print_start_end();
-    auto steps = map.bfs();
+    {
+        LOG_DURATION("BFS on simple map")
+        auto steps = map.bfs();
+    }
     std::cout << map.path_len() << std::endl;
     map.print_steps();
     return 0;

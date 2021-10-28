@@ -1,4 +1,5 @@
 #include "fast_bfs.h"
+#include <climits>
 
 SimpleMap::SimpleMap(const std::string &filename) {
     this->map_size = 0;

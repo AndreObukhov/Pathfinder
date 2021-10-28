@@ -16,6 +16,9 @@ namespace bfsPoints {
  */
     std::deque<Point> routeFromMap(map &m);
 
+    void addToQueue(const Point& currentPoint, const Point& nextPoint,
+                    map& m, std::deque<Point>& nextPoints);
+
 /**
  * Finds route (sequence of points) on a map with marked start, finish and barriers.
  * @param m - map.
@@ -25,7 +28,12 @@ namespace bfsPoints {
 }
 
 namespace bfsInts {
-    // ...
+    std::deque<Point> routeFromMap(map &m);
+    std::deque<Point> findRoute(map &m);
+
+    Point checkNeighbours(const int& dist, const Point &p, const map &m);
+    void addToQueue(const Point& currentPoint, const Point& nextPoint,
+                    bfsInts::map& m, std::deque<Point>& nextPoints);
 }
 
 #endif //PATHFINDER_FINDER_BFS_H

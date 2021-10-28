@@ -110,6 +110,8 @@ int bfsInts::mapElement::getDist() const {
     return dist;
 }
 
+// -------------------------------------------------------------------
+
 bfsInts::map::map(const std::string &filename) : mapT<bfsInts::mapElement>(filename) {
     for (auto& vec : map_) {
         for (auto& pt : vec) {

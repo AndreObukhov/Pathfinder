@@ -16,7 +16,7 @@
 
 // special value returned if point coordinates is out of map range
 #define CELL_ACCESS_ERROR 'E'
-#define INT_MAX 1
+#define INT_MAX 999999
 
 /**
  * Struct representing point of the map. Contains point's coordinates.

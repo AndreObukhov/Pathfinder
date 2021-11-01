@@ -91,3 +91,40 @@ void bfsPoints::map::setPrevPoint(const Point &current, const Point &prev) {
 Point bfsPoints::map::getPrevPoint(const Point &pt) const {
     return map_[pt.row][pt.col].getPrevPoint();
 }
+
+// -------------------------------------------------------------------
+
+void astarPoints::mapElement::setCost(int newCost)  {
+    cost = newCost;
+}
+
+int astarPoints::mapElement::getCost() const  {
+    return cost;
+}
+void astarPoints::mapElement::setPrevPoint(const Point &prev) {
+    prevPoint = prev;
+}
+
+Point astarPoints::mapElement::getPrevPoint() const {
+    return prevPoint;
+}
+
+// -------------------------------------------------------------------
+
+astarPoints::map::map(const std::string& filename) : mapT<astarPoints::mapElement>(filename) {}
+
+void astarPoints::map::setCost(const Point &current, const int newCost) {
+    map_[current.row][current.col].setCost(newCost);
+}
+
+int astarPoints::map::getCost(const Point &current) const {
+    return map_[current.row][current.col].getCost();
+}
+
+void astarPoints::map::setPrevPoint(const Point &current, const Point &prev) {
+    map_[current.row][current.col].setPrevPoint(prev);
+}
+
+Point astarPoints::map::getPrevPoint(const Point &pt) const {
+    return map_[pt.row][pt.col].getPrevPoint();
+}

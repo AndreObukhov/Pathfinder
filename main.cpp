@@ -7,6 +7,7 @@
 #include "map_generator.h"
 
 int main() {
+
     /*
     bfsInts::map m("../gen.txt");
     for (int i = 0; i < 20; i ++) {

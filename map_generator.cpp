@@ -17,6 +17,16 @@ void generateMap(const int& size, const int& threshold, const std::string& filen
     for(int i = 0; i < size; i ++) {
         for(int j = 0; j < size; j ++) {
             int a = uni(rng);
+
+            if (i == 0 && j == 0) {
+                line.push_back('S');
+                continue;
+            }
+            if (i == size - 1 && j == size - 1) {
+                line.push_back('F');
+                continue;
+            }
+
             if (a % 100 < threshold) {
                 line.push_back('#');
             } else {

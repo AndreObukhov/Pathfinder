@@ -7,7 +7,6 @@
 #include "map_generator.h"
 
 int main() {
-    // generateMap(30, 20, "../gen.txt");
     /*
     bfsInts::map m("../gen.txt");
     for (int i = 0; i < 20; i ++) {
@@ -17,7 +16,9 @@ int main() {
     m.printMap();
     */
 
-    bfsPoints::map m_pts("../map.txt");
+    generateMap(200, 20, "../gen.txt");
+
+    bfsPoints::map m_pts("../gen.txt");
     //m.printMap();
     //std::cout << "--------------------" << std::endl;
     std::deque<Point> route;
@@ -27,9 +28,10 @@ int main() {
     }
     if (!route.empty()) {
         m_pts.markRoute(route);
+        // m_pts.printMap();
     }
 
-    bfsInts::map m_ints("../map.txt");
+    bfsInts::map m_ints("../gen.txt");
     {
         LOG_DURATION("BFS algorithm with Ints");
         route = bfsInts::findRoute(m_ints);

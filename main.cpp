@@ -7,6 +7,7 @@
 
 #include "map_generator.h"
 
+
 int main() {
     // generateMap(30, 20, "../gen.txt");
 

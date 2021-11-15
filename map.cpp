@@ -128,3 +128,29 @@ void astarPoints::map::setPrevPoint(const Point &current, const Point &prev) {
 Point astarPoints::map::getPrevPoint(const Point &pt) const {
     return map_[pt.row][pt.col].getPrevPoint();
 }
+
+// ----------------------------------------------------------
+
+bfsInts::mapElement::mapElement() {
+    status = '.';
+    visited = false;
+    dist = INT_MAX;
+}
+
+void bfsInts::mapElement::setDist(const int &d) {
+    dist = d;
+}
+
+int bfsInts::mapElement::getDist() const {
+    return dist;
+}
+
+void bfsInts::map::setDist(const Point &current, const int &d) {
+    map_[current.row][current.col].setDist(d);
+}
+
+int bfsInts::map::getDist(const Point &pt) const {
+    return map_[pt.row][pt.col].getDist();
+}
+
+bfsInts::map::map(const std::string& filename) : mapT<bfsInts::mapElement>(filename) {}

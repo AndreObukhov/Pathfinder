@@ -28,10 +28,10 @@ namespace bfsPoints {
 }
 
 namespace bfsInts {
-    std::deque<Point> routeFromMap(map &m);
-    std::deque<Point> findRoute(map &m);
+    std::deque<Point> routeFromMap(bfsInts::map &m);
+    std::deque<Point> findRoute(bfsInts::map &m);
 
-    Point checkNeighbours(const int& dist, const Point &p, const map &m);
+    Point checkNeighbours(const int& dist, const Point &p, const bfsInts::map &m);
     void addToQueue(const Point& currentPoint, const Point& nextPoint,
                     bfsInts::map& m, std::deque<Point>& nextPoints);
 }

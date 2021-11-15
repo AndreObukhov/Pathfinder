@@ -94,40 +94,37 @@ Point bfsPoints::map::getPrevPoint(const Point &pt) const {
 
 // -------------------------------------------------------------------
 
-bfsInts::mapElement::mapElement() {
-    if (status == '#') {
-        dist = -1;
-    } else {
-        dist = INT_MAX;
-    }
+void astarPoints::mapElement::setCost(int newCost)  {
+    cost = newCost;
 }
 
-void bfsInts::mapElement::setDist(const int &d) {
-    dist = d;
+int astarPoints::mapElement::getCost() const  {
+    return cost;
+}
+void astarPoints::mapElement::setPrevPoint(const Point &prev) {
+    prevPoint = prev;
 }
 
-int bfsInts::mapElement::getDist() const {
-    return dist;
+Point astarPoints::mapElement::getPrevPoint() const {
+    return prevPoint;
 }
 
 // -------------------------------------------------------------------
 
-bfsInts::map::map(const std::string &filename) : mapT<bfsInts::mapElement>(filename) {
-    for (auto& vec : map_) {
-        for (auto& pt : vec) {
-            if (pt.isFree()) {
-                pt.setDist(INT_MAX);
-            } else {
-                pt.setDist(-1);
-            }
-        }
-    }
+astarPoints::map::map(const std::string& filename) : mapT<astarPoints::mapElement>(filename) {}
+
+void astarPoints::map::setCost(const Point &current, const int newCost) {
+    map_[current.row][current.col].setCost(newCost);
 }
 
-void bfsInts::map::setDist(const Point &current, const int &d) {
-    map_[current.row][current.col].setDist(d);
+int astarPoints::map::getCost(const Point &current) const {
+    return map_[current.row][current.col].getCost();
 }
 
-int bfsInts::map::getDist(const Point &pt) const {
-    return map_[pt.row][pt.col].getDist();
+void astarPoints::map::setPrevPoint(const Point &current, const Point &prev) {
+    map_[current.row][current.col].setPrevPoint(prev);
+}
+
+Point astarPoints::map::getPrevPoint(const Point &pt) const {
+    return map_[pt.row][pt.col].getPrevPoint();
 }

@@ -23,49 +23,57 @@ SimpleMap::SimpleMap(const std::string &filename) {
                 } else {
                     this->field[i][j] = INT_MAX;
                     if (inputSymbol == 'S') {
-                        this->start_y = i;
-                        this->start_x = j;
+//                        this->start_y = i;
+//                        this->start_x = j;
+                        this->startPoint = Point(j,i);
                     }
                     if (inputSymbol == 'F') {
-                        this->finish_y = i;
-                        this->finish_x = j;
+//                        this->finish_y = i;
+//                        this->finish_x = j;
+                        this->finishPoint = Point(j,i);
                     }
                 }
             }
         }
-
     }
+    infile.close();
+}
+
+SimpleMap::~SimpleMap() {
+    for (int i = 0; i < this->map_size + 2; i++) {
+        free(this->field[i]);
+    }
+    free(this->field);
 }
 
 void SimpleMap::print_start_end() const {
-    std::cout << "start: x = " << this->start_x << "; y = " << this->start_y << "\nfinish: x = " << this->finish_x
-              << "; y = " << this->finish_y << std::endl;
+    std::cout << "start: x = " << this->startPoint.col << "; y = " << this->startPoint.row << "\nfinish: x = " << this->finishPoint.col
+              << "; y = " << this->finishPoint.row << std::endl;
 }
 
-std::vector<std::tuple<int, int>> SimpleMap::bfs(){
-    int x,y;
-    int dx, dy;
-    int nx, ny;
+std::vector<Point> SimpleMap::bfs(){
+    struct Point point;
+    struct Point dPoint;
+    struct Point nPoint;
     int curr_len;
 
-    if (this->start_x == this->finish_x && this->start_y == this->finish_y){
+    if (this->startPoint == this->finishPoint){
         return this->steps;
     }
 
-    this->field[this->start_y][this->start_x] = 0;
-    this->queue.emplace_back(this->start_x, this->start_y);
+    this->field[this->startPoint.row][this->startPoint.col] = 0;
+    this->queue.push_back(this->startPoint);
     while (!this->queue.empty()){
-        std::tie(x, y) = this->queue.front();
+        point = this->queue.front();
         this->queue.pop_front();
-        curr_len = this->field[y][x] + 1;
+        curr_len = this->field[point.row][point.col] + 1;
         for (int i = 0; i < 4; i++) {
-            std::tie(dx, dy) = this->deltas[i];
-            nx = x + dx;
-            ny = y + dy;
-            if (this->field[ny][nx] != -1 && this->field[ny][nx] > curr_len){
-                this->field[ny][nx] = curr_len;
-                this->queue.emplace_back(nx, ny);
-                if (this->finish_x == nx && this->finish_y == ny){ // построение пути
+            dPoint = this->deltas[i];
+            nPoint = point + dPoint;
+            if (this->field[nPoint.row][nPoint.col] != -1 && this->field[nPoint.row][nPoint.col] > curr_len){
+                this->field[nPoint.row][nPoint.col] = curr_len;
+                this->queue.emplace_back(nPoint.col, nPoint.row);
+                if (nPoint == this->finishPoint){ // построение пути
                     return this->build_path();
                 }
             }
@@ -75,20 +83,19 @@ std::vector<std::tuple<int, int>> SimpleMap::bfs(){
     return this->steps;
 }
 
-std::vector<std::tuple<int, int>> SimpleMap::build_path(){
-    int x = this->finish_x, y = this->finish_y;
-    int dx, dy;
-    int nx, ny;
-    this->steps.emplace_back(x, y);
-    while(this->field[y][x] != 0){
+std::vector<Point> SimpleMap::build_path(){
+    struct Point point = this->finishPoint;
+    struct Point dPoint;
+    struct Point nPoint;
+    this->steps.push_back(point);
+    while(this->field[point.row][point.col] != 0){
         for (int i = 0; i < 4; i++) {
-            std::tie(dx, dy) = this->deltas[i];
-            nx = x + dx;
-            ny = y + dy;
-            if (this->field[ny][nx] < this->field[y][x] && this->field[ny][nx] != -1){
-                this->steps.emplace_back(nx, ny);
-                x = nx;
-                y = ny;
+            dPoint = this->deltas[i];
+            nPoint = point + dPoint;
+            if (this->field[nPoint.row][nPoint.col] < this->field[point.row][point.col] &&
+            this->field[nPoint.row][nPoint.col] != -1){
+                this->steps.push_back(nPoint);
+                point = nPoint;
                 break;
             }
         }
@@ -97,16 +104,16 @@ std::vector<std::tuple<int, int>> SimpleMap::build_path(){
 }
 
 int SimpleMap::path_len() {
-    return this->field[this->finish_y][this->finish_x];
+    return this->field[this->finishPoint.row][this->finishPoint.col];
 }
 
 void SimpleMap::print_steps() {
     auto iter = this->steps.rbegin();
     int i = 1;
-    int x, y;
+    struct Point point;
     while(iter != this->steps.rend()){
-        std::tie(x, y) = *iter;
-        std::cout << i << ": x = " << x << "; y = " << y << std::endl;
+        point = *iter;
+        std::cout << i << ": x = " << point.col << "; y = " << point.row << std::endl;
         ++iter;
         i++;
     }

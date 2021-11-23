@@ -10,16 +10,16 @@
 int main() {
     // generateMap(30, 20, "../gen.txt");
 
-//    bfsPoints::map m("../map.txt");
+    bfsPoints::map m("../map.txt");
 //    m.printMap();
 //    std::cout << "--------------------" << std::endl;
 //
-//    std::deque<Point> route;
+    std::deque<Point> route;
 //
-//    {
-//        LOG_DURATION("BFS algorithm with Points");
-//        route = bfsPoints::findRoute(m);
-//    }
+    {
+        LOG_DURATION("BFS algorithm with Points");
+        route = bfsPoints::findRoute(m);
+    }
 //
 //    if (!route.empty()) {
 //        m.markRoute(route);
@@ -35,12 +35,12 @@ int main() {
 //    }
 
     SimpleMap map("../map.txt");
-    map.print_start_end();
+//    map.print_start_end();
     {
         LOG_DURATION("BFS on simple map")
         auto steps = map.bfs();
     }
-    std::cout << map.path_len() << std::endl;
-    map.print_steps();
+//    std::cout << map.path_len() << std::endl;
+//    map.print_steps();
     return 0;
 }

@@ -7,28 +7,30 @@
 #include <deque>
 #include <tuple>
 #include <iostream>
+#include "map.h"
 
 class SimpleMap{
 public:
     explicit SimpleMap(const std::string& filename);
+    ~SimpleMap();
     void print_start_end() const;
-    std::vector<std::tuple<int, int>> bfs();
+    std::vector<Point> bfs();
     int path_len();
     void print_steps();
 
 protected:
     int ** field;
     int map_size;
-    std::vector<std::tuple<int, int>> deltas {std::make_tuple(0,-1),
-                                              std::make_tuple(0,1),
-                                              std::make_tuple(-1,0),
-                                              std::make_tuple(1,0)};
-    int start_x, start_y, finish_x, finish_y;
-    std::deque<std::tuple<int,int>> queue;
-    std::vector<std::tuple<int,int>> steps;
+    std::vector<Point> deltas {Point(0,-1),
+                               Point(0,1),
+                               Point(-1,0),
+                               Point(1,0)};
+    struct Point startPoint, finishPoint;
+    std::deque<Point> queue;
+    std::vector<Point> steps;
 
 private:
-    std::vector<std::tuple<int, int>> build_path();
+    std::vector<Point> build_path();
 };
 
 #endif //PATHFINDER_FAST_BFS_H

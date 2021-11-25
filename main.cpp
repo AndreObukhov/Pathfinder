@@ -6,6 +6,7 @@
 #include "profile.h"
 
 #include "map_generator.h"
+#include "fast_bfs.h"
 
 
 int main() {
@@ -25,6 +26,12 @@ int main() {
     {
         LOG_DURATION("A-Star algorithm with Points");
         route = astarPoints::findRoute(a_map);
+    }
+
+    SimpleMap map("../map.txt");
+    {
+        LOG_DURATION("BFS on simple map")
+        auto steps = map.bfs();
     }
 
     if (!route.empty()) {

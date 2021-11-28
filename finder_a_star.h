@@ -22,9 +22,9 @@ namespace astarPoints {
 
         struct PrCmp
         {
-            bool operator()(const PQElement& lhs, const PQElement& rhs) const
+            constexpr bool operator()(const PQElement& lhs, const PQElement& rhs) const
             {
-                return lhs.first < rhs.first;
+                return lhs.first > rhs.first;
             }
         };
 
@@ -34,7 +34,7 @@ namespace astarPoints {
             return elements.empty();
         }
 
-        inline void put(Point item, int priority) {
+        inline void put(const Point& item, const int& priority) {
             elements.emplace(std::pair<int, Point>(priority, item));
         }
 

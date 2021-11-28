@@ -5,7 +5,7 @@
 #include "finder_a_star.h"
 #include <tuple>
 
-inline int heuristic(Point a, Point b) {
+inline int heuristic(const Point& a, const Point& b) {
     return abs(a.col - b.col) + abs(a.row - b.row);
 }
 
@@ -21,13 +21,11 @@ std::deque<Point> astarPoints::routeFromMap(astarPoints::map& m) {
 }
 
 std::deque<Point> astarPoints::findRoute(astarPoints::map& m) {
-
     std::deque<Point> route;
     if (m.getStartPoint() == m.getFinishPoint()) {
         // the stupidest case
         return route;
     }
-
 
     Point finish = m.getFinishPoint();
     // points we need to visit:
@@ -44,12 +42,11 @@ std::deque<Point> astarPoints::findRoute(astarPoints::map& m) {
             break;
         }
 
-
         // The point is not the end => visiting four neighbours
         // moving up
         Point nextPoint = currentPoint - Point(0, 1);
         if (nextPoint.row >= 0 && m.needToVisit(nextPoint)) {
-            double new_cost = m.getCost(currentPoint) + 1; // coast to each neighbour equals to 1
+            double new_cost = m.getCost(currentPoint) + 1; // cost of each neighbour equals to 1
             if (new_cost < m.getCost(nextPoint) || m.getCost(nextPoint) == 0) {
                 m.setCost(nextPoint, new_cost);
                 double priority = new_cost + heuristic(nextPoint, finish);

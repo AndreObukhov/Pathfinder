@@ -232,7 +232,7 @@ namespace astarPoints{
     public:
         void setPrevPoint(const Point &p);
         Point getPrevPoint() const;
-        void setCost(const int newCost);
+        void setCost(const int& newCost);
         int getCost() const;
     private:
         Point prevPoint;    // Coords of previous point in search. Defaults to (0, 0) in all constructors.
@@ -242,7 +242,7 @@ namespace astarPoints{
     class map : public mapT<astarPoints::mapElement> {
     public:
         map(const std::string& filename);
-        void setCost(const Point &current, const int newCost);
+        void setCost(const Point &current, const int& newCost);
         int getCost(const Point &pt) const;
         void setPrevPoint(const Point &current, const Point &prev);
         Point getPrevPoint(const Point &pt) const;

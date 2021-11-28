@@ -2,7 +2,7 @@
 
 Search of path between two points on a 2-dimensional map.
 
-<h3> 1. Default algorithm v1 </h3>
+<h3> 1. Default algorithm v1 - BFS with Points </h3>
 
 (Made by Andrew Obukhov)
 
@@ -12,7 +12,7 @@ By doing this, once the algorithm reaches finish point,
 the route (if there is one) can be built 
 by reversing to the start point.
 
-<h3> 2. Default algorithm v1.1 </h3>
+<h3> 2. Default algorithm v1.1 - BFS with Ints </h3>
 
 (Made by Andrew Obukhov)
 
@@ -24,7 +24,7 @@ by reversing - always going to the point with less distance.
 
 This fix was inspired by the next algorithm...:
 
-<h3> 3. Default algorithm v2 </h3>
+<h3> 3. Default algorithm v2 - BFS on Simple Map </h3>
 
 (made by Ilya Kochetygov)
 
@@ -34,7 +34,7 @@ the distance to the start point is written on each step.
 This also allows to build route by reversing, 
 but apparently requires less memory and read-write operations.
 
-<h3> 4. Fancy algorithms </h3>
+<h3> 4. Fancy algorithms - A-Star </h3>
 
 (made by Yauhenii Sharamed)
 
@@ -49,3 +49,5 @@ by saving coordinates of points from previous step.
 <h3> Results </h3>
 
 ![alt text](https://github.com/AndreObukhov/Pathfinder/blob/main/reports/performance_graph.png?raw=true)
+
+More detailed performance data - in reports folder.
